@@ -183,9 +183,11 @@ const ImagePage = () => {
             <Card key={src} className="rounded-lg overflow-hidden">
               <div className="relative aspect-square">
                 <Image
-                  fill
+                  width={200}
+                  height={200}
                   alt="Generated"
                   src={src}
+                  priority
                 />
               </div>
               <CardFooter className="p-2">
