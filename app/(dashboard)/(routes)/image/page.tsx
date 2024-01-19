@@ -22,6 +22,8 @@ import Image from "next/image";
 import { useProModal } from "@/hooks/user-pro-modal";
 import toast from "react-hot-toast";
 
+
+
 const ImagePage = () => {
   const router = useRouter();
   const [images, setImages] = useState<string[]>([])
@@ -35,6 +37,10 @@ const ImagePage = () => {
       resolution: "512x512"
     }
   });
+
+  const myLoader = () => {
+    return `https://oaidalleapiprodscus.blob.core.windows.net || 75}`
+  }
 
   const isLoading = form.formState.isSubmitting;
   
@@ -183,11 +189,11 @@ const ImagePage = () => {
             <Card key={src} className="rounded-lg overflow-hidden">
               <div className="relative aspect-square">
                 <Image
-                  width={200}
-                  height={200}
+                  loader={myLoader}
                   alt="Generated"
                   src={src}
-                  priority
+                  width={500}
+                  height={500}
                 />
               </div>
               <CardFooter className="p-2">
