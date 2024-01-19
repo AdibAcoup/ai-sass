@@ -22,6 +22,9 @@ import Image from "next/image";
 import { useProModal } from "@/hooks/user-pro-modal";
 import toast from "react-hot-toast";
 
+const myLoader = () => {
+  return `https://oaidalleapiprodscus.blob.core.windows.net || 75}`
+}
 
 
 const ImagePage = () => {
@@ -38,9 +41,6 @@ const ImagePage = () => {
     }
   });
 
-  const myLoader = () => {
-    return `https://oaidalleapiprodscus.blob.core.windows.net || 75}`
-  }
 
   const isLoading = form.formState.isSubmitting;
   
