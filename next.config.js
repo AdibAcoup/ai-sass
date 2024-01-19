@@ -1,20 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  i18n,
-  sassOptions: {
-    includePaths: [path.join(__dirname, "src/styles")],
-    prependData: `@import "variables.scss";`,
-  },
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "oaidalleapiprodscus.blob.core.windows.net",
         port: "",
-        pathname: "**",
+        pathname: "/account123/**",
       },
     ],
   },
 };
+
 module.exports = nextConfig;
