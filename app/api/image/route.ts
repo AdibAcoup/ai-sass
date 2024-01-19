@@ -1,13 +1,15 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { OpenAI } from "openai";
+import { Configuration, OpenAIApi } from "openai";
 
-import { checkApiLimit, increaseApiLimit } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
+import { increaseApiLimit, checkApiLimit } from "@/lib/api-limit";
 
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
 });
+
+const openai = new OpenAIApi(configuration);
 
 export async function POST(
   req: Request
@@ -21,7 +23,7 @@ export async function POST(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!openai.apiKey) {
+    if (!configuration.apiKey) {
       return new NextResponse("OpenAI API Key not configured.", { status: 500 });
     }
 
@@ -44,17 +46,17 @@ export async function POST(
       return new NextResponse("Free trial has expired. Please upgrade to pro.", { status: 403 });
     }
 
-     const response = await openai.images.generate({
+    const response = await openai.createImage({
       prompt,
       n: parseInt(amount, 10),
-      size: resolution,      
+      size: resolution,
     });
-    
+
     if (!isPro) {
       await increaseApiLimit();
     }
 
-    return NextResponse.json(response.data);
+    return NextResponse.json(response.data.data);
   } catch (error) {
     console.log('[IMAGE_ERROR]', error);
     return new NextResponse("Internal Error", { status: 500 });
